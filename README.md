@@ -15,3 +15,7 @@ Pikmin deck
 joker to summon more Pikmin
 
 Pikmin card in deck
+
+gun card
+
+bullets to the left of it determine chip bonus
