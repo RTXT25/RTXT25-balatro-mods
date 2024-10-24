@@ -5,23 +5,15 @@
 --- MOD_DESCRIPTION: stupidthing.
 ----------------------------------------------
 ------------MOD CODE -------------------------
---Creates an atlas for cards to use
 SMODS.Atlas {
-  -- Key for code to find it with
   key = "rtxtmod",
-  -- The name of the file, for the code to pull the atlas from
   path = "ass.png",
-  -- Width of each sprite in 1x size
   px = 71,
-  -- Height of each sprite in 1x size
   py = 95
 }
 
---69
 SMODS.Joker {
-  -- How the code refers to the joker.
   key = 'funnyjk',
-  -- loc_text is the actual name and description that show in-game for the card.
   loc_txt = {
     name = 'Funny Number Joker',
     text = {
@@ -36,19 +28,11 @@ SMODS.Joker {
   atlas = 'rtxtmod',
   pos = { x = 0, y = 0 },
   cost = 2,
-  -- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
   calculate = function(self, card, context)
-    -- Tests if context.joker_main == true.
-    -- joker_main is a SMODS specific thing, and is where the effects of jokers that just give +stuff in the joker area area triggered, like Joker giving +Mult, Cavendish giving XMult, and Bull giving +Chips.
     if context.joker_main then
-      -- Tells the joker what to do. In this case, it pulls the value of mult from the config, and tells the joker to use that variable as the "mult_mod".
       return {
         mult_mod = card.ability.extra.mult,
-        -- This is a localize function. Localize looks through the localization files, and translates it. It ensures your mod is able to be translated. I've left it out in most cases for clarity reasons, but this one is required, because it has a variable.
-        -- This specifically looks in the localization table for the 'variable' category, specifically under 'v_dictionary' in 'localization/en-us.lua', and searches that table for 'a_mult', which is short for add mult.
-        -- In the localization file, a_mult = "+#1#". Like with loc_vars, the vars in this message variable replace the #1#.
         message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
-        -- Without this, the mult will stil be added, but it'll just show as a blank red square that doesn't have any text.
       }
     end
   end
@@ -102,8 +86,30 @@ SMODS.Joker {
   end
 }
 
-SMODS.Joker{
- key="negajk
+SMODS.Joker {
+  key = 'negajk',
+  loc_txt = {
+    name = 'Negnag',
+    text = {
+      "{C:mult}+#1#{} Mult"
+    }
+  },
+  config = { extra = { mult = 69 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.mult } }
+  end,
+  rarity = 3,
+  atlas = 'rtxtmod',
+  pos = { x = 2, y = 0 },
+  cost = 2,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+        mult_mod = card.ability.extra.mult,
+        message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
+      }
+    end
+  end
 }
 
 ----------------------------------------------
