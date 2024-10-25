@@ -89,18 +89,94 @@ SMODS.Joker {
 SMODS.Joker {
   key = 'negajk',
   loc_txt = {
-    name = 'Negnag',
+    name = 'Nigg-Nagg',
+    text = {
+      "When Blind is selected,",
+      "create a {C:dark_edition}Negative{} Common Joker"
+    }
+  },
+  config = { extra = {} },
+  rarity = 2,
+  atlas = 'rtxtmod',
+  pos = { x = 2, y = 0 },
+  cost = 10,
+  calculate = function(self, card, context)
+    if context.blind then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          local card = create_card('Joker', G.jokers, nil, 0, nil, nil, nil, 'neg')
+          card:set_edition('e_negative', true)
+          card:set_rental(true)
+          card:set_perishable(true)
+          card:add_to_deck()
+          G.jokers:emplace(card)
+          card:start_materialize()
+          G.GAME.joker_buffer = 0
+          return true
+        end
+      }))
+      -- Ask someone who knows eval_status_text better to elaborate on this.
+      card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+        { message = localize('k_duplicated_ex') })
+    end
+  end
+}
+
+SMODS.Joker {
+  key = 'spjk',
+  loc_txt = {
+    name = 'Extremely Specific Joker',
+    text = {
+      "Add a {X:mult,C:white}X100{} Mult hand is a 2 pair and has a 2 hearts 2 gold club queen glass spade queen steel diamond"
+    }
+  },
+  config = { extra = { Xmult = 100 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.Xmult } }
+  end,
+  rarity = 3,
+  atlas = 'rtxtmod',
+  pos = { x = 0, y = 0 },
+  cost = 2,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+        mult_mod = card.ability.extra.mult,
+        message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
+      }
+    end
+  end
+  }
+
+SMODS.Joker {
+  key = 'moneyjk',
+  loc_txt = {
+    name = 'devcash',
+    text = {
+      "gives me money",
+    }
+  },
+  config = { extra = {} },
+  rarity = 1,
+  atlas = 'rtxtmod',
+  pos = { x = 4, y = 1 },
+  cost = 9999999999999999999999999999999999999999,
+}
+SMODS.Joker {
+  key = 'opdev',
+  loc_txt = {
+    name = 'devtestjoker',
     text = {
       "{C:mult}+#1#{} Mult"
     }
   },
-  config = { extra = { mult = 69 } },
+  config = { extra = { mult = 9999999999999999999999999999999999999999999999999999999999999 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult } }
   end,
   rarity = 3,
   atlas = 'rtxtmod',
-  pos = { x = 2, y = 0 },
+  pos = { x = 3, y = 1 },
   cost = 2,
   calculate = function(self, card, context)
     if context.joker_main then
@@ -111,6 +187,5 @@ SMODS.Joker {
     end
   end
 }
-
 ----------------------------------------------
 ------------MOD CODE END----------------------
