@@ -1,5 +1,9 @@
 # RTXT25-balatro-mods
 
+Joker list
+Nigg-Nagg
+Funny Number Joker
+
 idea list
 
 gay joker
@@ -21,7 +25,3 @@ gun card
 bullets to the left of it determine chip bonus
 
 different guns have different calibres and max card counts jokes add more space like more reloads
-
-nega joker
-
-spawns negative joker rental
