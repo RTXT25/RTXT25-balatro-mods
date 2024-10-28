@@ -43,8 +43,8 @@ SMODS.Joker {
   loc_txt = {
     name = 'Gay Joker',
     text = {
-      "{C:attention}Straights{} dont score but",
-      "gain {C:mult}+#1#{} Mult every pair of kings or jacks",
+      "gain {C:mult}+#1#{} Mult",
+      "every pair of kings or jacks",
     }
   },
   config = { extra = { mult = 0 , mult_gain = 4 } },
@@ -88,7 +88,8 @@ SMODS.Joker {
     name = 'Nigg-Nagg',
     text = {
       "When Blind is selected,",
-      "create a {C:dark_edition}Negative{} Common Joker"
+      "create a {C:dark_edition}Negative{}",
+      "Common Joker"
     }
   },
   config = { extra = {} },
@@ -123,7 +124,8 @@ SMODS.Joker {
   loc_txt = {
     name = 'Extremely Specific Joker',
     text = {
-      "Add a {X:mult,C:white}X100{} Mult when hand contains",
+      "Add a {X:mult,C:white}X100{} Mult",
+      "when hand contains",
       "a 2 hearts 2 gold club queen glass spade queen steel diamond",
     }
   },
