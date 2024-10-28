@@ -144,7 +144,20 @@ SMODS.Joker {
     end
   end
   }
-
+  SMODS.Joker {
+    key = 'rock',
+    loc_txt = {
+      name = 'Rock',
+      text = {
+        "Does nothing",
+      }
+    },
+    config = { extra = {} },
+    rarity = 1,
+    atlas = 'rtxtmod',
+    pos = { x = 4, y = 0 },
+    cost = 0,
+  }
 SMODS.Joker {
   key = 'moneyjk',
   loc_txt = {
