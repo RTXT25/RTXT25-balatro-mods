@@ -1,10 +1,14 @@
 # RTXT25-balatro-mods
 
-Joker list
+Currrent Joker list
 
 Nigg-Nagg
 
+spawns a random negative rental perishale joker when each blind is selected
+
 Funny Number Joker
+
++69 mult
 
 idea list
 
