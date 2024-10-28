@@ -10,6 +10,10 @@ Funny Number Joker
 
 +69 mult
 
+Rock
+
+Does nothing
+
 idea list
 
 gay joker
