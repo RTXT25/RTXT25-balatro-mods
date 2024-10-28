@@ -43,46 +43,42 @@ SMODS.Joker {
   loc_txt = {
     name = 'Gay Joker',
     text = {
-      "if played hand",
-      "contains a {C:attention}Straight{}",
-      "lose hand",
-      "balls"
+      "{C:attention}Straights{} dont score but",
+      "gain {C:mult}+#1#{} Mult every pair of kings or jacks",
     }
   },
-  config = { extra = { chips = 0, chip_gain = 15 } },
+  config = { extra = { mult = 0 , mult_gain = 4 } },
   rarity = 1,
   atlas = 'rtxtmod',
   pos = { x = 1, y = 0 },
   cost = 5,
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.Xmult } }
+    return { vars = { card.ability.extra.mult, card.ability.extra.mult_gain } }
   end,
   calculate = function(self, card, context)
     if context.joker_main then
       return {
-        chip_mod = card.ability.extra.chips,
-        message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }
+        mult_mod = card.ability.extra.mult,
+        message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
       }
     end
-
-    -- context.before checks if context.before == true, and context.before is true when it's before the current hand is scored.
-    -- (context.poker_hands['Straight']) checks if the current hand is a 'Straight'.
-    -- The 'next()' part makes sure it goes over every option in the table, which the table is context.poker_hands.
-    -- context.poker_hands contains every valid hand type in a played hand.
-    -- not context.blueprint ensures that Blueprint or Brainstorm don't copy this upgrading part of the joker, but that it'll still copy the added chips.
-    if context.before and next(context.poker_hands['Straight']) and not context.blueprint then
-      -- Updated variable is equal to current variable, plus the amount of chips in chip gain.
-      -- 15 = 0+15, 30 = 15+15, 75 = 60+15.
-      card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_gain
-      return {
-        message = 'Fail!',
-        colour = G.C.CHIPS,
-        -- The return value, "card", is set to the variable "card", which is the joker.
-        -- Basically, this tells the return value what it's affecting, which if it's the joker itself, it's usually card.
-        -- It can be things like card = context.other_card in some cases, so specifying card (return value) = card (variable from function) is required.
-        card = card
-      }
+    local kings = 0
+    local jacks = 0
+    if context.before then
+      if context.scoring_hand[i]:get_id() == 13 then kings = kings + 1 end
+      if context.scoring_hand[i]:get_id() == 11 then jacks = jacks + 1 end
     end
+    if context.before and kings > 1 then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+    end
+    --[[if context.individual and context.cardarea == G.play then  
+      if context.before and next(context.poker_hands['Pair']) and not context.blueprint then
+        if context.other_card:get_id() == 11 or context.other_card:get_id() == 13 and context.other_card:get_id() == 13 then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+       card = context.other_card 
+        end
+      end
+    end]]
   end
 }
 
@@ -127,7 +123,8 @@ SMODS.Joker {
   loc_txt = {
     name = 'Extremely Specific Joker',
     text = {
-      "Add a {X:mult,C:white}X100{} Mult hand is a 2 pair and has a 2 hearts 2 gold club queen glass spade queen steel diamond"
+      "Add a {X:mult,C:white}X100{} Mult when hand contains",
+      "a 2 hearts 2 gold club queen glass spade queen steel diamond",
     }
   },
   config = { extra = { Xmult = 100 } },
