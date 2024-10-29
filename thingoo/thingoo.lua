@@ -146,12 +146,71 @@ SMODS.Joker {
     end
   end
   }
+SMODS.Joker {
+    key = 'dmr',
+    loc_txt = {
+      name = 'Diamond Minning Rig',
+      text = {
+        "Gain {X:mult,C:white}X10{} Mult",
+        "but have a {C:green}#1# in 5{} chance",
+        "of running out of Diamonds"
+      } 
+    },
+    config = { extra = { Xmult = 10, odds = 5 } },
+    rarity = 2,
+    atlas = 'rtxtmod',
+    pos = { x = 0, y = 1 },
+    cost = 8,
+    loc_vars = function(self, info_queue, card)
+      return { vars = { card.ability.extra.Xmult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    end,
+    calculate = function(self, card, context)
+      if context.joker_main then
+        return {
+          message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+      if context.end_of_round and not context.game_over and not context.repetition and not context.blueprint then
+        if pseudorandom('diamondminerig') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+              play_sound('tarot1')
+              card.T.r = -0.2
+              card:juice_up(0.3, 0.4)
+              card.states.drag.is = true
+              card.children.center.pinch.x = true
+              G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.3,
+                blockable = false,
+                func = function()
+                  G.jokers:remove_card(card)
+                  card:remove()
+                  card = nil
+                  return true;
+                end
+              }))
+              return true
+            end
+          }))
+          return {
+            message = 'Empty!'
+          }
+        else
+          return {
+            message = 'Diamonds!'
+          }
+        end
+      end
+    end
+  }
   SMODS.Joker {
     key = 'rock',
     loc_txt = {
-      name = 'Rock',
+      name = 'Empty Rock',
       text = {
-        "Does nothing",
+        "You ran out of Diamonds",
       }
     },
     config = { extra = {} },
