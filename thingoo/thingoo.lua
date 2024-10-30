@@ -146,21 +146,22 @@ SMODS.Joker {
     end
   end
   }
-SMODS.Joker {
+  SMODS.Joker {
     key = 'dmr',
     loc_txt = {
       name = 'Diamond Minning Rig',
       text = {
-        "Gain {X:mult,C:white}X10{} Mult",
-        "but have a {C:green}#1# in 5{} chance",
-        "of running out of Diamonds"
-      } 
+        "{X:mult,C:white} X#1# {} Mult",
+        "{C:green}#2# in #3#{} chance this",
+        "runs out of diamonds"
+      }
     },
     config = { extra = { Xmult = 10, odds = 5 } },
-    rarity = 2,
+    rarity = 1,
     atlas = 'rtxtmod',
-    pos = { x = 0, y = 1 },
-    cost = 8,
+    pos = { x = 3, y = 1 },
+    cost = 4,
+    eternal_compat = false,
     loc_vars = function(self, info_queue, card)
       return { vars = { card.ability.extra.Xmult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
     end,
@@ -172,8 +173,8 @@ SMODS.Joker {
         }
       end
       if context.end_of_round and not context.game_over and not context.repetition and not context.blueprint then
-        if pseudorandom('diamondminerig') < G.GAME.probabilities.normal / card.ability.extra.odds then
-        G.E_MANAGER:add_event(Event({
+        if pseudorandom('dmr') < G.GAME.probabilities.normal / card.ability.extra.odds then
+          G.E_MANAGER:add_event(Event({
             func = function()
               play_sound('tarot1')
               card.T.r = -0.2
@@ -189,17 +190,18 @@ SMODS.Joker {
                   card:remove()
                   card = nil
                   return true;
+                  
                 end
               }))
               return true
             end
           }))
           return {
-            message = 'Empty!'
+            message = 'Diamonds!'
           }
         else
           return {
-            message = 'Diamonds!'
+            message = 'Empty!'
           }
         end
       end
@@ -258,5 +260,6 @@ SMODS.Joker {
     end
   end
 }
+
 ----------------------------------------------
 ------------MOD CODE END----------------------
