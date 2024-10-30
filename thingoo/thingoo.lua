@@ -112,7 +112,6 @@ SMODS.Joker {
           return true
         end
       }))
-      -- Ask someone who knows eval_status_text better to elaborate on this.
       card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
         { message = localize('k_duplicated_ex') })
     end
@@ -159,7 +158,7 @@ SMODS.Joker {
     config = { extra = { Xmult = 10, odds = 5 } },
     rarity = 1,
     atlas = 'rtxtmod',
-    pos = { x = 3, y = 1 },
+    pos = { x = 0, y = 1 },
     cost = 4,
     eternal_compat = false,
     loc_vars = function(self, info_queue, card)
@@ -190,9 +189,17 @@ SMODS.Joker {
                   card:remove()
                   card = nil
                   return true;
-                  
                 end
               }))
+              return true
+            end
+          }))
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              --local card = create_card('Joker', thingoo.jokers.rock, rock, 0, rock, rock, rock, 'rock')
+              local makerock = SMODS.create_card{key = "j_rtxtmod_rock"}
+              G.jokers:emplace(makerock)
+              makerock:add_to_deck()
               return true
             end
           }))
