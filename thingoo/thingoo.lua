@@ -37,7 +37,6 @@ SMODS.Joker {
     end
   end
 }
-
 SMODS.Joker {
   key = 'gayjoker',
   loc_txt = {
@@ -81,7 +80,6 @@ SMODS.Joker {
     end]]
   end
 }
-
 SMODS.Joker {
   key = 'negajk',
   loc_txt = {
@@ -101,6 +99,7 @@ SMODS.Joker {
     if context.blind then
       G.E_MANAGER:add_event(Event({
         func = function()
+          --local card = SMODS.create_card{}
           local card = create_card('Joker', G.jokers, nil, 0, nil, nil, nil, 'neg')
           card:set_edition('e_negative', true)
           card:set_rental(true)
@@ -117,7 +116,6 @@ SMODS.Joker {
     end
   end
 }
-
 SMODS.Joker {
   key = 'spjk',
   loc_txt = {
@@ -144,8 +142,8 @@ SMODS.Joker {
       }
     end
   end
-  }
-  SMODS.Joker {
+}
+SMODS.Joker {
     key = 'dmr',
     loc_txt = {
       name = 'Diamond Minning Rig',
@@ -175,22 +173,11 @@ SMODS.Joker {
         if pseudorandom('dmr') < G.GAME.probabilities.normal / card.ability.extra.odds then
           G.E_MANAGER:add_event(Event({
             func = function()
-              play_sound('tarot1')
-              card.T.r = -0.2
-              card:juice_up(0.3, 0.4)
-              card.states.drag.is = true
-              card.children.center.pinch.x = true
-              G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.3,
-                blockable = false,
-                func = function()
-                  G.jokers:remove_card(card)
-                  card:remove()
-                  card = nil
-                  return true;
-                end
-              }))
+              func = function()
+                G.jokers:remove_card(card)
+                card:remove()
+                card = nil
+                return true;
               return true
             end
           }))
@@ -198,8 +185,8 @@ SMODS.Joker {
             func = function()
               --local card = create_card('Joker', thingoo.jokers.rock, rock, 0, rock, rock, rock, 'rock')
               local makerock = SMODS.create_card{key = "j_rtxtmod_rock"}
-              G.jokers:emplace(makerock)
               makerock:add_to_deck()
+              G.jokers:emplace(makerock)
               return true
             end
           }))
@@ -213,8 +200,22 @@ SMODS.Joker {
         end
       end
     end
-  }
-  SMODS.Joker {
+}
+SMODS.Joker {
+  key = 'exo1',
+  loc_txt = {
+    name = 'devcash',
+    text = {
+      "gives me money",
+    }
+  },
+  config = { extra = {} },
+  rarity = 1,
+  atlas = 'rtxtmod',
+  pos = { x = 4, y = 1 },
+  cost = 2,
+}
+SMODS.Joker {
     key = 'rock',
     loc_txt = {
       name = 'Empty Rock',
@@ -227,7 +228,31 @@ SMODS.Joker {
     atlas = 'rtxtmod',
     pos = { x = 4, y = 0 },
     cost = 0,
-  }
+}
+SMODS.Joker {
+  key = 'invest',
+  loc_txt = {
+    name = 'Investment Tower',
+    text = {
+      "{C:mult}+#1#{} Mult"
+    }
+  },
+  config = { extra = { money = 2 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.money } }
+  end,
+  rarity = 1,
+  atlas = 'rtxtmod',
+  pos = { x = 1, y = 1 },
+  cost = 2,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      if context.before and next(context.poker_hands['Pair']) and not context.blueprint then
+        local bonus = card.ability.extra.money
+        if bonus > 0 then return bonus end
+    end
+  end
+}
 SMODS.Joker {
   key = 'moneyjk',
   loc_txt = {
@@ -266,6 +291,13 @@ SMODS.Joker {
       }
     end
   end
+}
+
+--blind
+SMODS.Blind{
+  name = 'Purple PWNer',
+  text = 'Fat Ass Blind',
+  mult =6
 }
 
 ----------------------------------------------
