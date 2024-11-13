@@ -11,7 +11,13 @@ SMODS.Atlas {
   px = 71,
   py = 95
 }
-
+SMODS.Atlas {
+  key = "rtxtexo",
+  path = "exo.png",
+  px = 71,
+  py = 95
+}
+--joker
 SMODS.Joker {
   key = 'funnyjk',
   loc_txt = {
@@ -202,16 +208,88 @@ SMODS.Joker {
     end
 }
 SMODS.Joker {
-  key = 'exo1',
+  key = 'orangejk',
   loc_txt = {
-    name = 'devcash',
+    name = 'Orange Fan',
     text = {
-      "gives me money",
+      "Gains {C:mult}+#1#{} Mult",
+      "for every Orange Joker",
+      "at the end of the round"
     }
   },
   config = { extra = {} },
   rarity = 1,
   atlas = 'rtxtmod',
+  pos = { x = 4, y = 1 },
+  cost = 2,
+}
+SMODS.Joker {
+  key = 'exo1',
+  loc_txt = {
+    name = 'Exodia The Forbidden One',
+    text = {
+      "car",
+    }
+  },
+  config = { extra = {} },
+  rarity = 1,
+  atlas = 'rtxtexo',
+  pos = { x = 4, y = 1 },
+  cost = 2,
+}
+SMODS.Joker {
+  key = 'exo2',
+  loc_txt = {
+    name = 'Left Leg of the Forbidden One',
+    text = {
+      "car",
+    }
+  },
+  config = { extra = {} },
+  rarity = 1,
+  atlas = 'rtxtexo',
+  pos = { x = 4, y = 1 },
+  cost = 2,
+}
+SMODS.Joker {
+  key = 'exo3',
+  loc_txt = {
+    name = 'Left Arm of the Forbidden One',
+    text = {
+      "car",
+    }
+  },
+  config = { extra = {} },
+  rarity = 1,
+  atlas = 'rtxtexo',
+  pos = { x = 4, y = 1 },
+  cost = 2,
+}
+SMODS.Joker {
+  key = 'exo4',
+  loc_txt = {
+    name = 'Right Leg of the Forbidden One',
+    text = {
+      "car",
+    }
+  },
+  config = { extra = {} },
+  rarity = 1,
+  atlas = 'rtxtexo',
+  pos = { x = 4, y = 1 },
+  cost = 2,
+}
+SMODS.Joker {
+  key = 'exo5',
+  loc_txt = {
+    name = 'Right Arm of the Forbidden One',
+    text = {
+      "car",
+    }
+  },
+  config = { extra = {} },
+  rarity = 1,
+  atlas = 'rtxtexo',
   pos = { x = 4, y = 1 },
   cost = 2,
 }
@@ -246,12 +324,18 @@ SMODS.Joker {
   pos = { x = 1, y = 1 },
   cost = 2,
   calculate = function(self, card, context)
+    if context.before and next(context.poker_hands['Pair']) and not context.blueprint then
+      local bonus = card.ability.extra.money
+      if bonus > 0 then return bonus end
+    end
+  end
+  --[[calculate = function(self, card, context)
     if context.joker_main then
       if context.before and next(context.poker_hands['Pair']) and not context.blueprint then
         local bonus = card.ability.extra.money
         if bonus > 0 then return bonus end
     end
-  end
+  end]]--
 }
 SMODS.Joker {
   key = 'moneyjk',
@@ -292,11 +376,24 @@ SMODS.Joker {
     end
   end
 }
-
+--tarrot
+SMODS.Consumable{
+  key = 'fuel',
+  loc_txt = {
+    name = 'Fuel',
+    text = {
+      "Used to Refuel the Plane",
+    }
+  },
+}
 --blind
 SMODS.Blind{
-  name = 'Purple PWNer',
-  text = 'Fat Ass Blind',
+  loc_txt = {
+    name = 'Purple PWNer',
+    text = {
+      'Fat Ass Blind',
+    }
+  }, 
   mult =6
 }
 
