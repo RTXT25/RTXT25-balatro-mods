@@ -149,6 +149,7 @@ SMODS.Joker {
     end
   end
 }
+--[[
 SMODS.Joker {
     key = 'dmr',
     loc_txt = {
@@ -186,6 +187,7 @@ SMODS.Joker {
                 return true;
               return true
             end
+          end
           }))
           G.E_MANAGER:add_event(Event({
             func = function()
@@ -207,6 +209,7 @@ SMODS.Joker {
       end
     end
 }
+    ]]--
 SMODS.Joker {
   key = 'orangejk',
   loc_txt = {
@@ -234,7 +237,7 @@ SMODS.Joker {
   config = { extra = {} },
   rarity = 1,
   atlas = 'rtxtexo',
-  pos = { x = 4, y = 1 },
+  pos = { x = 0, y = 0 },
   cost = 2,
 }
 SMODS.Joker {
@@ -248,7 +251,7 @@ SMODS.Joker {
   config = { extra = {} },
   rarity = 1,
   atlas = 'rtxtexo',
-  pos = { x = 4, y = 1 },
+  pos = { x = 1, y = 0 },
   cost = 2,
 }
 SMODS.Joker {
@@ -262,7 +265,7 @@ SMODS.Joker {
   config = { extra = {} },
   rarity = 1,
   atlas = 'rtxtexo',
-  pos = { x = 4, y = 1 },
+  pos = { x = 2, y = 0 },
   cost = 2,
 }
 SMODS.Joker {
@@ -276,7 +279,7 @@ SMODS.Joker {
   config = { extra = {} },
   rarity = 1,
   atlas = 'rtxtexo',
-  pos = { x = 4, y = 1 },
+  pos = { x = 3, y = 0 },
   cost = 2,
 }
 SMODS.Joker {
@@ -290,7 +293,7 @@ SMODS.Joker {
   config = { extra = {} },
   rarity = 1,
   atlas = 'rtxtexo',
-  pos = { x = 4, y = 1 },
+  pos = { x = 4, y = 0 },
   cost = 2,
 }
 SMODS.Joker {
@@ -376,9 +379,10 @@ SMODS.Joker {
     end
   end
 }
---tarrot
-SMODS.Consumable{
+--tarot
+SMODS.Consumable {
   key = 'fuel',
+  set = 'Tarot',
   loc_txt = {
     name = 'Fuel',
     text = {
@@ -388,14 +392,20 @@ SMODS.Consumable{
 }
 --blind
 SMODS.Blind{
-  loc_txt = {
-    name = 'Purple PWNer',
-    text = {
-      'Fat Ass Blind',
-    }
-  }, 
-  mult =6
+  key = 'pwner',
+  mult = 5,
+  loc_txt =  	{
+    name = 'Purple_PWNer',
+    text = { '' },
+  }
 }
-
+SMODS.Blind{
+  key = 'jimbofan',
+  mult = 2,
+  loc_txt =  	{
+    name = 'Jimbo Fan',
+    text = { '' },
+  }
+}
 ----------------------------------------------
 ------------MOD CODE END----------------------
