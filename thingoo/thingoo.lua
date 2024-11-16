@@ -458,5 +458,9 @@ SMODS.Blind{
     text = { '' },
   }
 }
+--enhance
+SMODS.Enhancement{
+  key = 'eorange'
+}
 ----------------------------------------------
 ------------MOD CODE END----------------------
