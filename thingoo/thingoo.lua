@@ -332,13 +332,42 @@ SMODS.Joker {
       if bonus > 0 then return bonus end
     end
   end
-  --[[calculate = function(self, card, context)
-    if context.joker_main then
-      if context.before and next(context.poker_hands['Pair']) and not context.blueprint then
-        local bonus = card.ability.extra.money
-        if bonus > 0 then return bonus end
-    end
-  end]]--
+}
+SMODS.Joker {
+  key = 'plane',
+  loc_txt = {
+    name = 'Plane',
+    text = {
+      "gains +1 mult  every tinme +1 mylut addditive",
+      "requires fuel to fly",
+      "fuel counter"
+    }
+  },
+  config = { extra = { money = 2 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.money } }
+  end,
+  rarity = 1,
+  atlas = 'rtxtmod',
+  pos = { x = 2, y = 1 },
+  cost = 2,
+}
+SMODS.Joker {
+  key = 'rubble',
+  loc_txt = {
+    name = 'Historical Event',
+    text = {
+      "add mult and extra money when card is sold"
+    }
+  },
+  config = { extra = { money = 2 , mult = 0} },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.money } }
+  end,
+  rarity = 1,
+  atlas = 'rtxtmod',
+  pos = { x = 2, y = 1 },
+  cost = 2,
 }
 SMODS.Joker {
   key = 'moneyjk',
@@ -389,6 +418,28 @@ SMODS.Consumable {
       "Used to Refuel the Plane",
     }
   },
+}
+SMODS.Consumable {
+  key = 'jimbospawn',
+  set = 'Tarot',
+  loc_txt = {
+    name = 'Jimbo-Tron',
+    text = {
+      "1 in 3 chnance to spawn a negative Jimbo",
+    }
+  },
+  config = { extra = { odds = 3 } },
+  calculate = function(self, card, context)
+    if pseudorandom('jimbospawn') < card.ability.extra.odds then
+      local card = SMOds.create_card{key = 'Joker'}
+      card:set_edition('e_negative', true)
+      card:add_to_deck()
+      G.jokers:emplace(card)
+      card:start_materialize()
+      G.GAME.joker_buffer = 0
+      return true
+    end
+  end
 }
 --blind
 SMODS.Blind{
