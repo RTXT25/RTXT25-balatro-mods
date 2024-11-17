@@ -18,6 +18,7 @@ SMODS.Atlas {
   py = 95
 }
 --joker
+--69
 SMODS.Joker {
   key = 'funnyjk',
   loc_txt = {
@@ -43,6 +44,7 @@ SMODS.Joker {
     end
   end
 }
+--gay
 SMODS.Joker {
   key = 'gayjoker',
   loc_txt = {
@@ -86,6 +88,7 @@ SMODS.Joker {
     end]]
   end
 }
+--nega
 SMODS.Joker {
   key = 'negajk',
   loc_txt = {
@@ -122,6 +125,7 @@ SMODS.Joker {
     end
   end
 }
+--specific
 SMODS.Joker {
   key = 'spjk',
   loc_txt = {
@@ -149,6 +153,7 @@ SMODS.Joker {
     end
   end
 }
+--diamond
 --[[
 SMODS.Joker {
     key = 'dmr',
@@ -210,6 +215,7 @@ SMODS.Joker {
     end
 }
     ]]--
+--orange
 SMODS.Joker {
   key = 'orangejk',
   loc_txt = {
@@ -226,6 +232,7 @@ SMODS.Joker {
   pos = { x = 4, y = 1 },
   cost = 2,
 }
+--exo
 SMODS.Joker {
   key = 'exo1',
   loc_txt = {
@@ -296,6 +303,7 @@ SMODS.Joker {
   pos = { x = 4, y = 0 },
   cost = 2,
 }
+--rock
 SMODS.Joker {
     key = 'rock',
     loc_txt = {
@@ -310,6 +318,7 @@ SMODS.Joker {
     pos = { x = 4, y = 0 },
     cost = 0,
 }
+--tower
 SMODS.Joker {
   key = 'invest',
   loc_txt = {
@@ -333,6 +342,7 @@ SMODS.Joker {
     end
   end
 }
+--plane
 SMODS.Joker {
   key = 'plane',
   loc_txt = {
@@ -352,6 +362,7 @@ SMODS.Joker {
   pos = { x = 2, y = 1 },
   cost = 2,
 }
+--911
 SMODS.Joker {
   key = 'rubble',
   loc_txt = {
@@ -360,15 +371,29 @@ SMODS.Joker {
       "add mult and extra money when card is sold"
     }
   },
-  config = { extra = { money = 2 , mult = 0} },
+  config = { extra = { money = 2 , mult = 0, mult_gain = 4} },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.money } }
+    return { vars = { card.ability.extra.money, card.ability.extra.mult, card.ability.extra.mult_gain } }
   end,
   rarity = 1,
   atlas = 'rtxtmod',
-  pos = { x = 2, y = 1 },
+  pos = { x = 3, y = 1 },
   cost = 2,
+  calculate = function(self,card ,context)
+    if context.selling_card then
+      local bonus = card.ability.extra.money
+      if bonus > 0 then return bonus end
+      card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+    end
+    if context.joker_main then
+      return {
+        mult_mod = card.ability.extra.mult,
+        message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
+      }
+    end
+  end
 }
+--dev
 SMODS.Joker {
   key = 'moneyjk',
   loc_txt = {
@@ -409,6 +434,7 @@ SMODS.Joker {
   end
 }
 --tarot
+--fuel
 SMODS.Consumable {
   key = 'fuel',
   set = 'Tarot',
@@ -419,6 +445,7 @@ SMODS.Consumable {
     }
   },
 }
+--jimbo
 SMODS.Consumable {
   key = 'jimbospawn',
   set = 'Tarot',
@@ -442,6 +469,7 @@ SMODS.Consumable {
   end
 }
 --blind
+--pwn
 SMODS.Blind{
   key = 'pwner',
   mult = 5,
@@ -450,6 +478,7 @@ SMODS.Blind{
     text = { '' },
   }
 }
+--jimbo
 SMODS.Blind{
   key = 'jimbofan',
   mult = 2,
@@ -457,6 +486,7 @@ SMODS.Blind{
     name = 'Jimbo Fan',
     text = { '' },
   }
+  vars = {"average Jimbo Enjoyer"}
 }
 --enhance
 SMODS.Enhancement{
