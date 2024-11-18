@@ -368,23 +368,50 @@ SMODS.Joker {
   loc_txt = {
     name = 'Historical Event',
     text = {
-      "add mult and extra money when card is sold"
+      "add mult and extra money when card is sold",
+      "Gains {C:mult}+#1#{} Mult"
     }
   },
-  config = { extra = { money = 2 , mult = 0, mult_gain = 4} },
+  config = { extra = { money = 2 , mult = 4, mult_gain = 4} },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.money, card.ability.extra.mult, card.ability.extra.mult_gain } }
+    return { vars = { card.ability.extra.mult, card.ability.extra.mult_gain, card.ability.extra.money} }
   end,
   rarity = 1,
   atlas = 'rtxtmod',
   pos = { x = 3, y = 1 },
   cost = 2,
   calculate = function(self,card ,context)
-    if context.selling_card then
+    if context.joker_main then
+      return {
+        mult_mod = card.ability.extra.mult,
+        message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
+      }
+    elseif context.selling_card then
       local bonus = card.ability.extra.money
       if bonus > 0 then return bonus end
       card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
     end
+  end
+}
+--stock
+SMODS.Joker {
+  key = 'stock',
+  loc_txt = {
+    name = 'Stock Image',
+    text = {
+      "{C:mult}+#1#{} Mult",
+      "x mult based on jokers without edditions"
+    }
+  },
+  config = { extra = { mult = 1 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.mult } }
+  end,
+  rarity = 3,
+  atlas = 'rtxtmod',
+  pos = { x = 4, y = 1 },
+  cost = 2,
+  calculate = function(self, card, context)
     if context.joker_main then
       return {
         mult_mod = card.ability.extra.mult,
@@ -486,7 +513,6 @@ SMODS.Blind{
     name = 'Jimbo Fan',
     text = { '' },
   }
-  vars = {"average Jimbo Enjoyer"}
 }
 --enhance
 SMODS.Enhancement{
