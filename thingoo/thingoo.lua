@@ -238,7 +238,8 @@ SMODS.Joker {
   loc_txt = {
     name = 'Exodia The Forbidden One',
     text = {
-      "car",
+      "Collect all 5 pieces to",
+      "recive big mult"
     }
   },
   config = { extra = {} },
@@ -479,20 +480,29 @@ SMODS.Consumable {
   loc_txt = {
     name = 'Jimbo-Tron',
     text = {
-      "1 in 3 chnance to spawn a negative Jimbo",
+      "{C:green}#1# in #2#{} chance",
+      "to spawn a {C:dark_edition}Negative{} Jimbo",
     }
   },
   config = { extra = { odds = 3 } },
-  calculate = function(self, card, context)
-    if pseudorandom('jimbospawn') < card.ability.extra.odds then
-      local card = SMOds.create_card{key = 'Joker'}
-      card:set_edition('e_negative', true)
-      card:add_to_deck()
-      G.jokers:emplace(card)
-      card:start_materialize()
-      G.GAME.joker_buffer = 0
-      return true
-    end
+  can_use = function(self,card)
+    return true
+  end,
+  use = function(self,card)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        if pseudorandom('jimbospawn') < card.ability.extra.odds then
+          --local card = SMODS.create_card{key = 'j_Joker'}
+          local card = create_card('Joker', G.jokers, nil, nil, nil, nil, 'j_joker')
+          card:set_edition('e_negative', true)
+          card:add_to_deck()
+          G.jokers:emplace(card)
+          card:start_materialize()
+          G.GAME.joker_buffer = 0
+          return true
+        end
+      end
+    }))
   end
 }
 --blind
