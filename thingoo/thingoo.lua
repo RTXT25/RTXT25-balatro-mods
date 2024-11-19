@@ -524,9 +524,20 @@ SMODS.Blind{
     text = { '' },
   }
 }
---enhance
-SMODS.Enhancement{
+--edition
+SMODS.Eddition{
   key = 'eorange'
+  shader = false,
+  loc_txt = {
+    name = 'Orange',
+    label = 'Orange',
+    text = {
+      "Gains {C:mult}+#1#{} Mult",
+      "and Orangifys the card"
+    }
+  },
+  config = { extra = { mult = 5 } },
+  inshop = true,
 }
 ----------------------------------------------
 ------------MOD CODE END----------------------
