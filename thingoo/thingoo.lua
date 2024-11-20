@@ -17,6 +17,12 @@ SMODS.Atlas {
   px = 71,
   py = 95
 }
+SMODS.Atlas{
+  key = 'rtxttar',
+  path = 'Tarots.png',
+  px = 71,
+  py = 95
+}
 --joker
 --69
 SMODS.Joker {
@@ -473,6 +479,19 @@ SMODS.Consumable {
     }
   },
 }
+--oranger
+SMODS.Consumable {
+  key = 'oranger',
+  set = 'Tarot',
+  loc_txt = {
+    name = 'Orange',
+    text = {
+      "Orangifys the card"
+    }
+  },
+  atlas = 'rtxttar',
+  pos = { x = 0, y = 0 },
+}
 --jimbo
 SMODS.Consumable {
   key = 'jimbospawn',
@@ -484,6 +503,8 @@ SMODS.Consumable {
       "to spawn a {C:dark_edition}Negative{} Jimbo",
     }
   },
+  atlas = 'rtxttar',
+  pos = { x = 1, y = 0 },
   config = { extra = { odds = 3 } },
   can_use = function(self,card)
     return true
@@ -525,18 +546,18 @@ SMODS.Blind{
   }
 }
 --edition
-SMODS.Eddition{
-  key = 'eorange'
+SMODS.Edition{
+  key = 'eorange',
   shader = false,
   loc_txt = {
     name = 'Orange',
     label = 'Orange',
     text = {
-      "Gains {C:mult}+#1#{} Mult",
-      "and Orangifys the card"
+      "{C:mult}+#1#{} Mult",
+      "and is Orangifyed"
     }
   },
-  config = { extra = { mult = 5 } },
+  config = { mult = 5 },
   inshop = true,
 }
 ----------------------------------------------
